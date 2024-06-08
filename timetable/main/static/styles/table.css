@@ -1,0 +1,105 @@
+.read-db {
+    display: block;
+    overflow: hidden;
+
+    border-spacing: 0px;
+    border-radius: 10px;
+
+    text-align: center;
+    font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+
+.over {
+    display: grid;
+    
+    visibility: hidden;
+
+    position: fixed;
+    z-index: 1;
+
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 1000px;
+    height: 250px;
+    box-shadow: 5px 5px 5px rgb(214, 214, 214);
+
+    font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+    font-size: 20px;
+
+    border-radius: 10px;
+
+    background-color: rgb(224, 224, 224);
+    
+    grid-template-columns: 450px auto;
+    align-items: center;
+}
+
+.over-image {
+    display: block;
+
+    visibility: hidden;
+
+    position: fixed;
+    z-index: 1;
+
+    box-shadow: 5px 5px 5px rgb(214, 214, 214);
+
+    top: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    border-radius: 10px;
+
+    padding: 10px;
+    background-color: rgb(224, 224, 224);
+}
+
+label {
+    border: 2px dotted black;
+    border-radius: 5px;
+
+    font-size: 25px;
+}
+
+label:hover {
+    cursor: pointer;
+}
+
+.over > div {
+    display: grid;
+    text-align: center;
+}
+
+.send {
+    background-color: rgb(224, 224, 224);
+    
+    font-size: 25px;
+
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+@media screen and (min-width: 1800px) {
+    .read-db {
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width: 1700px) and (max-width: 1800px) {
+    .read-db {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1700px) {
+    .read-db {
+        font-size: 13px;
+    }
+}

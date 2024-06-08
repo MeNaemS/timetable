@@ -1,0 +1,91 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Main page{% endblock %}
+
+{% block columns %}
+    {% if row.Number_of_p_p is not None %}
+        <td style="border-style: solid solid none solid"> {{ row.Number_of_p_p }} </td>
+    {% else %}
+        <td style="border-style: none solid none solid"></td>
+    {% endif %}
+    {% if row.Service is not None %}
+        <td style="border-style: solid solid none solid"> {{ row.Service }} </td>
+    {% else %}
+        <td style="border-style: none solid none solid"></td>
+    {% endif %}
+    {% if row.Name_of_the_unit is not None %}
+        <td style="border-style: solid solid none solid"> {{ row.Name_of_the_unit }} </td>
+    {% else %}
+        <td style="border-style: none solid none solid"></td>
+    {% endif %}
+    <td>
+        {% if row.Work_performed is not None and row.Work_performed != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>{% if row.Time is not None %} {{ row.Time }} {% endif %}</td>
+    <td>
+        {% if row.January is not None and row.January == '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.February is not None and row.February != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.March is not None and row.March != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.April is not None and row.April != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.May is not None and row.May != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.June is not None and row.June != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.July is not None and row.July != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.August is not None and row.August != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.September is not None and row.September != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.October is not None and row.October != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.November is not None and row.November != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>
+        {% if row.December is not None and row.December != '1' %}
+            1
+        {% endif %}
+    </td>
+    <td>{% if row.Work_performed is not None %} {{ row.Place }} {% endif %}</td>
+    <td>{% if row.Object is not None %} {{ row.Object }} {% endif %}</td>
+    <td>{% if row.Place_of_object is not None %} {{ row.Place_of_object }} {% endif %}</td>
+    <td>{% if row.Name is not None %} {{ row.Name }} {% endif %}</td>
+{% endblock %}

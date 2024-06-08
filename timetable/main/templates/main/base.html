@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" href="{% static 'images/main_icon.ico' %}">
+        <link rel="stylesheet" href="{% static 'styles/table.css' %}" >
+    </head>
+    <body style="z-index: 0; background-color: rgb(241, 241, 241);">
+        <form method="post" enctype="multipart/form-data" class="over">
+            {% csrf_token %}
+            <div></div>
+            <div style='padding: 15px;'>
+                <label for='choose-file'>Выберите файл &rsaquo;</label>
+                <input type="text" id="filename" name="filename" style="visibility: hidden;">
+                <input type='file' id='choose-file' name="file" style='visibility: hidden;'>
+                <button type="submit" class='send'>Отправить изображение</button>
+            </div>
+        </form>
+        <div class="over-image"><img id="image" style="width: 500px;"></div>
+        <table border="1" class="read-db" style="margin-top: 100px">
+            <tr style="height: 50px; font-size: 18px;">
+                <td colspan="21">
+                    Годовой график планово-предупредительных работ и технического обслуживания
+                    оборудования и средств связи  на 2024г., площадка Калужская область, с. Ворсино,
+                    ул. Лыскина, д.6., стр. 1 (ООО "ПромСорт-Калуга")
+                </td>
+            </tr>
+            <tr>
+            <!-- Replace the visible column names for your base -->
+                <td rowspan="2">Услуга</td>
+                <td rowspan="2">Наименование обслуживаемой единицы</td>
+                <td rowspan="2">Выполняемые работы в рамках ППР и ТО</td>
+                <td rowspan="2">Общее кол-во обслуживаемых единиц в рамках ППР и ТО</td>
+                <td rowspan="2">(месяц, квартал, полугодие, год)</td>
+                <td colspan="12" rowspan="1">Количество обслуживаемых единиц (шт.)</td>
+                <td rowspan="2">Площадка</td>
+                <td rowspan="2">Принадлежность к объект</td>
+                <td rowspan="2">Обслуживаемая единица установлена на территории Цеха</td>
+                <td rowspan="2">Место установки обслуживаемой единицы</td>
+            </tr>   
+            <tr>
+                {% for month in months %}
+                    <td>{{ month }}</td>
+                {% endfor %}
+            </tr>
+            {% for row in rows %}
+                <tr>{% block columns %}{% endblock %}</tr>
+            {% endfor %}
+        </table>
+        <script src="{% static 'scripts/events.js' %}"></script>
+        <script>add_event()</script>
+    </body>
+</html>
