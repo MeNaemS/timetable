@@ -5,12 +5,10 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.files.base import ContentFile
 from django.shortcuts import render
 from django.conf import settings
+from os import listdir, makedirs
+from os.path import join, isdir
 from .models import TimeTable
-from os.path import join
 from json import loads
-from os import listdir
-
-dir: list[str] = listdir(join(settings.MEDIA_ROOT, 'images'))
 
 
 def render_main_page(request) -> HttpResponse:
@@ -26,13 +24,16 @@ def render_main_page(request) -> HttpResponse:
                 "Июль", "Август", "Сентябрь",
                 "Октябрь", "Ноябрь", "Декабрь"
             ],
-            'dir': dir
+            'dir': listdir(join(settings.MEDIA_ROOT, 'images'))
         }
     )
 
 # Create your views here.
 @csrf_protect
 def index(request):
+    if (not isdir(join(settings.MEDIA_ROOT, 'images'))):
+        makedirs(join(settings.MEDIA_ROOT, 'images'))
+    dir: list[str] = listdir(join(settings.MEDIA_ROOT, 'images'))
     if (request.method == 'POST'):
         try:
             if (f"{request.POST.get('filename')}.jpg" not in dir):

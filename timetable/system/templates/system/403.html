@@ -1,0 +1,18 @@
+{% extends 'system/base.html' %}
+
+{% block title %}Not enough rights{% endblock %}
+
+{% block body %}
+    {% csrf_token %}
+    <div class="center_error">
+        403<br>
+        <p class="under_text">
+            Недостаточно прав, чтобы отправить запрос, обратитесь к разработчику 
+            (ошибка, вероятней всего, разработчика).<br>Также ошибка была отправлена 
+            на сервер.
+        </p>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>send_message('{{ error }}')</script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'system/base.html' %}
+
+{% block title %}Error{% endblock %}
+
+{% block body %}
+    {% csrf_token %}
+    <div class="center_error">
+        500<br>
+        <p class="under_text">
+            Обнаружена ошибка на стороне сервера, пожалуйста, 
+            обратитесь к разработчику.<br>Ошибка была отправлена на 
+            сервер.
+        </p>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>send_message('{{ error }}')</script>
+{% endblock %}

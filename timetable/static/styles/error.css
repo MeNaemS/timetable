@@ -1,0 +1,25 @@
+body {
+    background-color: rgb(209, 209, 209);
+
+    z-index: 0;
+}
+
+.center_error {
+    display: block;
+
+    position: absolute;
+
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 100px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: blue;
+    text-align: center;
+}
+
+.under_text {
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
