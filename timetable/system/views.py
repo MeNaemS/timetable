@@ -32,6 +32,10 @@ def handler_404(request, exception):
 def handler_500(request):
     from sys import exc_info
 
-    if request.method == 'POST':
-        add_file(join(settings.MEDIA_ROOT, 'error'), '500.json', loads(request.body))
-    return render(request, 'system/500.html', {'error': str(exc_info()[1])})
+    print(exc_info())
+    try:
+        if request.method == 'POST':
+            add_file(join(settings.MEDIA_ROOT, 'error'), '500.json', loads(request.body))
+        return render(request, 'system/500.html', {'error': str(exc_info()[1])})
+    except TypeError:
+        return render(request, 'system/500.html', {'error': str(exc_info()[1])})

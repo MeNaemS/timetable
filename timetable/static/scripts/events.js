@@ -45,7 +45,7 @@ async function add_information(element) {
     const name = element.id.split('_');
 
     let date = new Date();
-    months = {
+    const months = {
         'Январь': 0, 'Февраль': 1, 'Март': 2,
         'Апрель': 3, 'Май': 4, 'Июнь': 5,
         'Июль': 6, 'Август': 7, 'Сентябрь': 8,
@@ -83,12 +83,28 @@ async function add_event() {
         cols.push(rows[row].cells);
     }
 
+    let date = new Date();
+    const months = {
+        'Январь': 0, 'Февраль': 1, 'Март': 2,
+        'Апрель': 3, 'Май': 4, 'Июнь': 5,
+        'Июль': 6, 'Август': 7, 'Сентябрь': 8,
+        'Октябрь': 9, 'Ноябрь': 10, 'Декабрь': 11
+    }
+
+    const images = document.getElementById('dir').value.split('|');
+
     for (let row = 3; row < rows.length; row++) {
         let line = cols[row];
         for (let col = 5; col < line.length; col++) {
             if (line[col].innerText === '1') {
                 line[col].id = `${line[line.length - 1].innerText}_${cols[2][col - 5].innerText}`;
                 line[col].style.cursor = 'help';
+                if (date.getMonth() > months[cols[2][col - 5].innerText] && images.indexOf(line[col].id) == -1) {
+                    console.log(images.indexOf(line[col].id), images, line[col].id)
+                    line[col].style.color  = 'red';
+                } else if (images.indexOf(line[col].id) != -1) {
+                    line[col].style.color  = 'blue';
+                }
                 line[col].addEventListener(
                     'click', async () => {
                         await post_request(line[col]);

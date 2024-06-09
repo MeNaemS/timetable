@@ -51,6 +51,7 @@
                 <tr>{% block columns %}{% endblock %}</tr>
             {% endfor %}
         </table>
+        <input type="hidden" value="{{ dir }}" id="dir">
         <script src="{% static 'scripts/events.js' %}"></script>
         <script>add_event()</script>
     </body>
