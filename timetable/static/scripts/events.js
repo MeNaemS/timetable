@@ -5,6 +5,45 @@ const months = {
     'Октябрь': 9, 'Ноябрь': 10, 'Декабрь': 11
 };
 
+search_form = document.getElementById('form-search')
+
+// -----------------------Searching for a row in a table-----------------------
+
+let names = [];
+
+function get_coincidences(input_box_search, first) {
+    let coincidences = [];
+    for (let index = 0; index < names.length; index++) {
+        if (names[index].textContent.includes(input_box_search.value)) {
+            if (first) {
+                return names[index];
+            }
+            coincidences.push(names[index]);
+        }
+    }
+    return coincidences;
+}
+
+async function recolor(column) {
+    setTimeout(
+        () => {
+            column.style.background = 'rgb(241, 241, 241)';
+        },
+        2000
+    );
+    column.style.background = 'rgba(120, 208, 120, 0.3)';
+}
+
+async function find(input_search) {
+    const input_box_search = document.getElementById(input_search);
+    if (input_box_search.value !== '') {
+        let name = get_coincidences(input_box_search, true);
+        name.scrollIntoView({ block: "center", behavior: "smooth" });
+        recolor(name);
+        input_box_search.value = '';
+    }
+}
+
 // ------------------------Sending and reading requests------------------------
 
 async function send_request(fetch_body) {
@@ -103,6 +142,9 @@ async function add_event() {
     for (let row = 3; row < rows.length; row++) {
         let line = cols[row];
         for (let col = 5; col < line.length; col++) {
+            if (!(names.includes(line[line.length - 1]))) {
+                names.push(line[line.length - 1])
+            }
             if (line[col].innerText === '1') {
                 add_column(line[col], line[line.length - 1].innerText, cols[2][col - 5].innerText, date, images);
             }

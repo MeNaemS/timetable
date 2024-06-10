@@ -35,20 +35,20 @@ def index(request):
     if (not isdir(join(settings.MEDIA_ROOT, 'images'))):
         makedirs(join(settings.MEDIA_ROOT, 'images'))
     dir: list[str] = listdir(join(settings.MEDIA_ROOT, 'images'))
-    try:
-        match request.method:
-            case 'POST':
-                path = default_storage.save(f'images/{request.POST.get('filename')}.jpg', ContentFile(request.FILES['file'].read()))
-                path = join(settings.MEDIA_ROOT, path)
-                return HttpResponsePermanentRedirect("/")
-            case 'PUT':
-                filename = f"{loads(request.body)['id']}.jpg"
-                if (not loads(request.body)['catch']):
-                    return JsonResponse(
-                        {'ok': True, 'image_path': True if (filename in dir) else False}
-                    )
-                return FileResponse(open(join(settings.MEDIA_ROOT, 'images', filename), 'rb'))
-            case _:
-                return render_main_page(request)
-    except MultiValueDictKeyError:
-        return render_main_page(request)
+
+    match request.method:
+        case 'POST':
+            path = default_storage.save(
+                f'images/{request.POST.get('filename')}.jpg',
+                ContentFile(request.FILES['file'].read())
+            )
+            path = join(settings.MEDIA_ROOT, path)
+            return HttpResponsePermanentRedirect("/")
+        case 'PUT':
+            filename = f"{loads(request.body)['id']}.jpg"
+            if (not loads(request.body)['catch']):
+                return JsonResponse(
+                    {'ok': True, 'image_path': True if (filename in dir) else False}
+                )
+            return FileResponse(open(join(settings.MEDIA_ROOT, 'images', filename), 'rb'))
+    return render_main_page(request)

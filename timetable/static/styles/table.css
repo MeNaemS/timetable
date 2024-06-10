@@ -9,6 +9,10 @@
     font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
 }
 
+.column-animation {
+    transition: background-color 1s linear;
+}
+
 .over {
     display: grid;
     
@@ -54,6 +58,34 @@
 
     padding: 10px;
     background-color: rgb(224, 224, 224);
+}
+
+.over-search {
+    display: block;
+
+    position: fixed;
+    z-index: 1;
+
+    background-color: rgb(233, 232, 232);
+    box-shadow: 5px 5px 5px rgb(226, 226, 226);
+
+    top: 5px;
+    right: 10px;
+
+    padding: 5px;
+    
+    border-radius: 10px;
+}
+
+.over-search > .form {
+    font-size: 18px;
+
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: 10px;
+}
+
+.hover:hover {
+    cursor: pointer;
 }
 
 label {

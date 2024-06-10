@@ -37,5 +37,5 @@ def handler_500(request):
         if request.method == 'POST':
             add_file(join(settings.MEDIA_ROOT, 'error'), '500.json', loads(request.body))
         return render(request, 'system/500.html', {'error': str(exc_info()[1])})
-    except TypeError:
+    except:
         return render(request, 'system/500.html', {'error': str(exc_info()[1])})
