@@ -14,11 +14,12 @@ let names = [];
 function get_coincidences(input_box_search, first) {
     let coincidences = [];
     for (let index = 0; index < names.length; index++) {
-        if (names[index].textContent.includes(input_box_search.value)) {
+        if (names[index].textContent.includes(input_box_search)) {
             if (first) {
                 return names[index];
+            } else if (input_box_search.length >= 3 && coincidences.length < 5) {
+                coincidences.push(names[index]);
             }
-            coincidences.push(names[index]);
         }
     }
     return coincidences;
@@ -29,19 +30,44 @@ async function recolor(column) {
         () => {
             column.style.background = 'rgb(241, 241, 241)';
         },
-        2000
+        1000
     );
     column.style.background = 'rgba(120, 208, 120, 0.3)';
 }
 
-async function find(input_search) {
-    const input_box_search = document.getElementById(input_search);
-    if (input_box_search.value !== '') {
-        let name = get_coincidences(input_box_search, true);
+async function find(input_search, value = null) {
+    async function windowed_element(name) {
+        input_box_search.value = '';
+        document.getElementById('helper').innerHTML = '';
         name.scrollIntoView({ block: "center", behavior: "smooth" });
         recolor(name);
-        input_box_search.value = '';
     }
+
+    let input_box_search = document.getElementById(input_search);
+    if (input_box_search.value !== '' && value === null) {
+        let name = get_coincidences(input_box_search.value, true);
+        try {
+            await windowed_element(name);
+        } catch (error) {
+            undefined;
+        }
+    } else if (value !== null) {
+        let name = get_coincidences(value, true);
+        await windowed_element(name);
+    }
+}
+
+function improved_visibility(list) {
+    for (let result = 0; result < list.length; result++) {
+        list[result] = `<button onclick='find("search", "${list[result].textContent}")' class='button-helper'>${list[result].textContent}</button>`;
+    }
+    return list;
+}
+
+async function get_helper(input_id, helper) {
+    helper = document.getElementById(helper);
+    let input_box_search = document.getElementById(input_id);
+    helper.innerHTML = improved_visibility(get_coincidences(input_box_search.value, false)).join('<br>');
 }
 
 // ------------------------Sending and reading requests------------------------
@@ -78,7 +104,7 @@ async function view_file(element) {
         image_file.setAttribute('src', file.result);
     }
     file.readAsDataURL(await response.blob());
-    document.getElementsByClassName('over-image')[0].style.visibility = 'visible';
+    document.getElementsByClassName('over image')[0].style.visibility = 'visible';
 }
 
 async function add_information(element) {
@@ -86,7 +112,7 @@ async function add_information(element) {
 
     let date = new Date();
 
-    let div = document.getElementsByClassName('over')[0];
+    let div = document.getElementsByClassName('over form-post')[0];
     div.children[1].innerHTML = `${name[0]}<br><br>${date.getMonth() > months[name[1]] ? '<p style="color: red;">Просрочено</p>' : 'Не добавлено'}`;
     
     let input_box = document.getElementById('choose-file');
@@ -118,8 +144,8 @@ async function add_column(column, name, month, date, images) {
 }
 
 async function add_event() {
-    let div = document.getElementsByClassName('over')[0];
-    let image = document.getElementsByClassName('over-image')[0];
+    let div = document.getElementsByClassName('over form-post')[0];
+    let image = document.getElementsByClassName('over image')[0];
     document.addEventListener(
         'click', async (event) => {
             if (!div.contains(event.target) && !image.contains(event.target)) {
@@ -128,6 +154,12 @@ async function add_event() {
             }
         }
     );
+
+    document.getElementById('search').addEventListener(
+        'keypress', async (event) => {
+            event.which === 13 ? await find('search') : await get_helper('search', 'helper');
+        }
+    )
 
     let rows = await document.getElementsByClassName('read-db')[0].rows;
     let cols = [];
@@ -143,7 +175,8 @@ async function add_event() {
         let line = cols[row];
         for (let col = 5; col < line.length; col++) {
             if (!(names.includes(line[line.length - 1]))) {
-                names.push(line[line.length - 1])
+                line[line.length - 1].id = line[line.length - 1].textContent;
+                names.push(line[line.length - 1]);
             }
             if (line[col].innerText === '1') {
                 add_column(line[col], line[line.length - 1].innerText, cols[2][col - 5].innerText, date, images);

@@ -10,11 +10,15 @@
         <link rel="stylesheet" href="{% static 'styles/table.css' %}" >
     </head>
     <body style="z-index: 0; background-color: rgb(241, 241, 241);">
-        <div id="form-search" class="over-search">
-            <input type="search" placeholder="Поиск по месту установки" id="search" required autocomplete="off" class="form">
-            <button type="button" class="form hover" onclick="find('search')">Искать</button>
+        <div id="form-search" class="over search">
+            <input \
+                type="search" placeholder="Поиск по месту установки" id="search" \
+                required autocomplete="off" class="form" \
+            >
+            <button type="button" class="form hover" onclick="find('search')">Искать</button><br>
+            <div id="helper"></div>
         </div>
-        <form method="post" enctype="multipart/form-data" class="over">
+        <form method="post" enctype="multipart/form-data" class="over form-post">
             {% csrf_token %}
             <div></div>
             <div style='padding: 15px;'>
@@ -24,7 +28,7 @@
                 <button type="submit" class='send'>Отправить изображение</button>
             </div>
         </form>
-        <div class="over-image"><img id="image" style="width: 500px;"></div>
+        <div class="over image"><img id="image" style="width: 500px;"></div>
         <table border="1" class="read-db" style="margin-top: 65px">
             <tr style="height: 50px; font-size: 18px;">
                 <td colspan="21">

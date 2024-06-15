@@ -23,7 +23,7 @@ handler404 = 'system.views.handler_404'
 handler500 = 'system.views.handler_500'
 
 urlpatterns = [
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^files/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path('', include(('main.urls', 'main'), namespace='main'))
 ]
